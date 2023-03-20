@@ -1,7 +1,14 @@
-export const ImageGalleryItem = () => {
+import './ImageGalleryItem.css';
+
+export const ImageGalleryItem = ({ largeImage, webImage, tags, onClick }) => {
   return (
-    <li class="gallery-item">
-      <img src="" alt="" />
-    </li>
+    <>
+      <img
+        className="ImageGalleryItem-image"
+        src={webImage}
+        alt={tags}
+        onClick={() => onClick(largeImage)}
+      />
+    </>
   );
 };

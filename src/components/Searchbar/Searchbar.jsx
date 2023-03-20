@@ -1,4 +1,6 @@
 import { Component } from 'react';
+import { BiSearchAlt2 } from 'react-icons/bi';
+import './Searchbar.css';
 
 export class Searchbar extends Component {
   state = {
@@ -11,7 +13,6 @@ export class Searchbar extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-
     if (this.state.query.trim() === '') {
       return alert('Please, enter correct query');
     }
@@ -22,14 +23,15 @@ export class Searchbar extends Component {
 
   render() {
     return (
-      <header class="searchbar">
-        <form class="form" onSubmit={this.handleSubmit}>
-          <button type="submit" class="button">
-            <span class="button-label">Search</span>
+      <header className="Searchbar">
+        <form className="SearchForm" onSubmit={this.handleSubmit}>
+          <button type="submit" className="SearchFormButton">
+            <BiSearchAlt2 style={{ width: '20px', height: '20px' }} />
+            <span className="SearchFormButtonLabel">Search</span>
           </button>
 
           <input
-            class="input"
+            className="SearchFormInput"
             type="text"
             autocomplete="off"
             autofocus

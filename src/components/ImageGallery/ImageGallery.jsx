@@ -1,7 +1,21 @@
-import { Component } from 'react';
+import { ImageGalleryItem } from '../ImageGalleryItem';
+import './ImageGallery.css';
 
-export class ImageGallery extends Component {
-  render() {
-    return <ul class="gallery">ImageGallery</ul>;
-  }
-}
+export const ImageGallery = ({ images, clickImage }) => {
+  console.log(images);
+
+  return (
+    <ul className="ImageGallery">
+      {images.map(item => (
+        <li className="ImageGalleryItem" key={item.id}>
+          <ImageGalleryItem
+            largeImage={item.largeImageURL}
+            webImage={item.webformatURL}
+            alt={item.tags}
+            onClick={clickImage}
+          />
+        </li>
+      ))}
+    </ul>
+  );
+};
