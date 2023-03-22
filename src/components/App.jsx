@@ -32,28 +32,37 @@ export class App extends Component {
   };
 
   render() {
+    const { images, largeImage, selectedImage } = this.state;
+
     return (
       <div
         style={{
-          height: '100vh',
+          // height: '100vh',
           // display: 'flex',
-          justifyContent: 'center',
+          // justifyContent: 'center',
           // alignItems: 'top',
-          fontSize: 40,
-          color: '#010101',
+          // fontSize: 40,
+          // color: '#010101',
           display: 'grid',
           gridTemplateColums: '1fr',
           gridGap: '16px',
           paddingBottom: '24px',
         }}
       >
-        <Searchbar onSubmit={this.handleSubmit} />
-        <ImageGallery images={this.state.images} clickImage={this.clickImage} />
-
-        <Modal largeImage={this.state.selectedImage}>
-          <img src={this.state.largeImage} alt={this.state.largeImage} />
-        </Modal>
-        <Button />
+        <div>
+          <Searchbar onSubmit={this.handleSubmit} />
+        </div>
+        <div>
+          <ImageGallery images={images} clickImage={this.clickImage} />
+          {images.length % 12 === 0 && images.length !== 0 && <Button />}
+        </div>
+        <div>
+          {largeImage !== null && (
+            <Modal largeImage={selectedImage}>
+              <img src={largeImage} alt={largeImage} />
+            </Modal>
+          )}
+        </div>
       </div>
     );
   }
