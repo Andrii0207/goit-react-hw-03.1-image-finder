@@ -4,7 +4,7 @@ export const ImageGalleryItem = ({ largeImage, webImage, tags, onClick }) => {
   return (
     <>
       <img
-        className="ImageGalleryItem-image"
+        className="ImageGalleryItemImage"
         src={webImage}
         alt={tags}
         onClick={() => onClick(largeImage)}
