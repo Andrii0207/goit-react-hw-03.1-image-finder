@@ -2,8 +2,6 @@ import { ImageGalleryItem } from '../ImageGalleryItem';
 import './ImageGallery.css';
 
 export const ImageGallery = ({ images, clickImage }) => {
-  console.log(images);
-
   return (
     <ul className="ImageGallery">
       {images.map(item => (

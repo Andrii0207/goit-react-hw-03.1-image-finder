@@ -10,21 +10,25 @@ export class App extends Component {
     query: '',
     images: [],
     largeImage: null,
+    page: 1,
   };
 
-  componentDidUpdate(prevProps, prevState) {
-    console.log('UPDATE');
+  componentDidUpdate(_, prevState) {
+    const { query, page } = this.state;
 
-    if (prevState.query !== this.state.query) {
-      searchImages(this.state.query)
+    if (prevState.query !== query || prevState.page !== page) {
+      searchImages(query, page)
         .then(resp => resp.json())
-        .then(resp => this.setState({ images: resp.hits }));
+        .then(resp =>
+          this.setState(prevState => ({
+            images: [...prevState.images, ...resp.hits],
+          })),
+        );
     }
-    console.log('STATE', this.state.images);
   }
 
   handleSubmit = value => {
-    this.setState({ query: value });
+    this.setState({ query: value, page: 1, images: [] });
   };
 
   clickImage = selectImage => {
@@ -35,6 +39,13 @@ export class App extends Component {
     this.setState({
       largeImage: null,
     });
+  };
+
+  loadMore = () => {
+    this.setState(prevState => ({
+      page: prevState.page + 1,
+    }));
+    console.log('change page', this.state.page);
   };
 
   render() {
@@ -60,7 +71,7 @@ export class App extends Component {
         </div>
         <div>
           <ImageGallery images={images} clickImage={this.clickImage} />
-          {images.length % 12 === 0 && images.length !== 0 && <Button />}
+          {images.length % 12 === 0 && images.length !== 0 && <Button onClick={this.loadMore} />}
         </div>
         <div>
           {largeImage !== null && (
