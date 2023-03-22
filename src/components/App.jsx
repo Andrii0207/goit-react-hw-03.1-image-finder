@@ -31,6 +31,12 @@ export class App extends Component {
     this.setState({ largeImage: selectImage });
   };
 
+  closeModal = () => {
+    this.setState({
+      largeImage: null,
+    });
+  };
+
   render() {
     const { images, largeImage, selectedImage } = this.state;
 
@@ -58,7 +64,7 @@ export class App extends Component {
         </div>
         <div>
           {largeImage !== null && (
-            <Modal largeImage={selectedImage}>
+            <Modal largeImage={selectedImage} closeModal={this.closeModal}>
               <img src={largeImage} alt={largeImage} />
             </Modal>
           )}

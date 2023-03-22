@@ -10,18 +10,28 @@ import './Modal.css';
 // };
 
 export class Modal extends Component {
-  componentDidMount(e) {
-    window.addEventListener('keydown', this.closeModalByECS);
+  componentDidMount() {
+    window.addEventListener('keydown', this.closeModalByESC);
   }
 
-  closeModalByECS = evt => {
-    console.log('close Modal', evt);
+  componentWillUnmount() {
+    window.removeEventListener('keydown', this.closeModalByESC);
+  }
+
+  closeModalByESC = evt => {
+    if (evt.code === 'Escape') this.props.closeModal();
+  };
+
+  closeModalByClickBackDrop = e => {
+    if (e.target === e.currentTarget) {
+      this.props.closeModal();
+    }
   };
 
   render() {
     return (
-      <div className="overlay">
-        <div className="modal">{this.props.children}</div>
+      <div className="Overlay" onClick={this.closeModalByClickBackDrop}>
+        <div className="Modal">{this.props.children}</div>
       </div>
     );
   }
