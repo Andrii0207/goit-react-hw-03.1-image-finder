@@ -1,4 +1,5 @@
 import { Component } from 'react';
+import toast, { Toaster } from 'react-hot-toast';
 import { ImageGallery } from './ImageGallery/ImageGallery';
 import { Searchbar } from './Searchbar/Searchbar';
 import { searchImages } from '../service/pixabay_api';
@@ -13,17 +14,23 @@ export class App extends Component {
     page: 1,
   };
 
+  notify = () => toast('Wow so easy!');
+
   componentDidUpdate(_, prevState) {
     const { query, page } = this.state;
 
     if (prevState.query !== query || prevState.page !== page) {
       searchImages(query, page)
         .then(resp => resp.json())
-        .then(resp =>
+        .then(resp => {
+          if (resp.hits.length === 0) {
+            toast.error("We've found no images");
+          }
           this.setState(prevState => ({
             images: [...prevState.images, ...resp.hits],
-          })),
-        );
+            // toast.success("We've found XXX images")
+          }));
+        });
     }
   }
 
@@ -45,7 +52,6 @@ export class App extends Component {
     this.setState(prevState => ({
       page: prevState.page + 1,
     }));
-    console.log('change page', this.state.page);
   };
 
   render() {
@@ -67,6 +73,11 @@ export class App extends Component {
         }}
       >
         <div>
+          <Toaster
+            duration={2000}
+            style={{ background: '#dd1717', color: '#1f24ac' }}
+            position={'right-top'}
+          />
           <Searchbar onSubmit={this.handleSubmit} />
         </div>
         <div>
